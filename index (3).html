@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Premium Task Submission</title>
+  <style>
+    body {
+      background: linear-gradient(to right, #1f4037, #99f2c8);
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .form-box {
+      background: #ffffff10;
+      padding: 30px;
+      border-radius: 20px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      backdrop-filter: blur(8.5px);
+      -webkit-backdrop-filter: blur(8.5px);
+      color: #fff;
+      width: 350px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    .form-box h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+
+    .task {
+      margin-bottom: 10px;
+    }
+
+    .task button {
+      background: #4CAF50;
+      border: none;
+      color: white;
+      padding: 8px 12px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .form-box input, .form-box button, .form-box label {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+
+    .form-box input {
+      background: #ffffffcc;
+      color: #000;
+    }
+
+    .form-box button[type="submit"] {
+      background: #2196F3;
+      color: white;
+      font-weight: bold;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+  <div class="form-box">
+    <h2>Online income</h2>
+    <h2>Complete Tasks Join </h2>
+
+    <div class="task">
+      <label>1. Join our Telegram Channel:</label>
+      <button onclick="window.open('https://t.me/monlineincome', '_blank')">Join Telegram</button>
+    </div>
+
+    <div class="task">
+      <label>2. Subscribe to our YouTube Channel:</label>
+      <button onclick="window.open('https://youtube.com/@onlineincome500?si=8KKTZIkzj44y8a9T', '_blank')">Subscribe YouTube</button>
+    </div>
+
+    <input type="text" id="telegramUsername" placeholder="Telegram Username" required />
+    <input type="text" id="address" placeholder="Your BSC Address" required />
+    <label>Upload Screenshot (YouTube Subscribed):</label>
+    <input type="file" id="screenshot" accept="image/*" />
+    <button type="submit" onclick="submitForm()">Submit</button>
+  </div>
+
+  <script>
+    function submitForm() {
+      const username = document.getElementById("telegramUsername").value.trim();
+      const address = document.getElementById("address").value.trim();
+      const screenshot = document.getElementById("screenshot").files[0];
+
+      if (!username || !address) {
+        alert("Please fill in all fields.");
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("telegramUsername", username);
+      formData.append("address", address);
+      formData.append("screenshot", screenshot ? screenshot.name : "N/A");
+
+      fetch("https://script.google.com/macros/s/AKfycbybb9U9y8kX_xV92i6q-0SK9mHXX_RUqfuwm_6UEqyu2BciUAUwvjbLyysRGPFjK2j-/exec", {
+        method: "POST",
+        body: formData
+      })
+      .then(res => res.json())
+      .then(data => {
+        if (data.status === "success") {
+          alert("Submitted Successfully!");
+        } else {
+          alert("Error: " + data.message);
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        alert("Something went wrong!");
+      });
+    }
+  </script>
+</body>
+</html>
